@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h2>Dashboard de Visitas Mensais</h2>
+  <canvas id="grafico" width="400" height="200"></canvas>
+
+  <script>
+    fetch('/api/dados')
+      .then(res => res.json())
+      .then(data => {
+        const ctx = document.getElementById('grafico').getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: data.labels,
+            datasets: [{
+              label: 'Visitas por mês',
+              data: data.valores,
+              backgroundColor: 'rgba(54, 162, 235, 0.6)'
+            }]
+          }
+        });
+      });
+  </script>
+</body>
+</html>
